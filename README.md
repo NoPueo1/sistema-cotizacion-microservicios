@@ -15,22 +15,15 @@ El ecosistema implementa el patrón de **Arquitectura de Microservicios**, lo qu
 ### Tecnologías Utilizadas
 - **Lenguaje:** Java 17
 - **Framework:** Spring Boot 3.2.5
-- **Gestión de Proyectos:** Maven (gestión de dependencias y estandarización)
+- **Gestión de Proyectos:** Maven
 - **Comunicación:** OpenFeign (resolución síncrona entre servicios)
 - **Base de Datos:** MySQL (XAMPP)
 
 ---
 
-### 🚀 Guía de Despliegue
-1. **Configuración Inicial:** Asegurar el servicio de MySQL en XAMPP.
-2. **Bases de Datos:** Crear las 10 bases de datos correspondientes (ej. `categoria_db`, `cotizador_db`, `cliente_db`, etc.).
-3. **Ejecución:** Cada microservicio es un módulo independiente; deben ejecutarse las 10 clases principales (`Ms[Nombre]Application.java`) simultáneamente en sus respectivos puertos.
+### 🗺️ Mapa de Flujo del Ecosistema (ASCII Art)
 
----
-
-## 🗺️ Mapa de Flujo del Ecosistema (ASCII Art)
-
-Así es como viajan los datos entre tus 10 microservicios. Fíjate cómo el MS-Cotizador coordina la magia usando Feign y cómo el MS-Stock se asegura de que no vendamos lo que no tenemos.
+Así es como viajan los datos entre tus 10 microservicios:
 
 ```text
 [ Thunder Client ]
@@ -66,14 +59,43 @@ Así es como viajan los datos entre tus 10 microservicios. Fíjate cómo el MS-C
        |  (8. POST /api/usuarios/login) --> [ MS-Usuario :8090 ] --> [ usuario_db ]
        v
 [ Fin del Ciclo ]
+```
 
 ---
 
-### 👥 Equipo de Desarrollo
-- **Agustín Vásquez Castro**
-- **Benjamín Arellano**
-- **Nicolás Ruiz**
+## 🚀 Guía de Despliegue
 
-**Docente:** Profesor Sting
-**Institución:** Duoc UC
-*Proyecto desarrollado para el curso de FullStack Java.*
+### Configuración Inicial
+Asegurar el servicio de MySQL en XAMPP.
+
+### Bases de Datos
+Crear las 10 bases de datos correspondientes:
+- categoria_db
+- cliente_db
+- equipo_db
+- cotizador_db
+- itemcotizador_db
+- stock_db
+- facturacion_db
+- proveedor_db
+- notificacion_db
+- usuario_db
+
+### Ejecución
+Cada microservicio es un módulo independiente; deben ejecutarse las 10 clases principales (`Ms[Nombre]Application.java`) simultáneamente en sus respectivos puertos.
+
+---
+
+## 👥 Equipo de Desarrollo
+
+- Agustín Vásquez Castro
+- Benjamín Arellano
+- Nicolás Ruiz
+
+### Docente
+Profesor Sting
+
+### Institución
+Duoc UC
+
+Proyecto desarrollado para el curso de FullStack Java.

@@ -28,12 +28,44 @@ El ecosistema implementa el patrón de **Arquitectura de Microservicios**, lo qu
 
 ---
 
-### 🧪 Flujo de Pruebas (Ecosistema)
-Para validar la integración, se recomienda seguir este flujo:
-1. **Poblar Inventario:** Crear categoría y equipo asociado.
-2. **Gestionar Clientes:** Registrar cliente en el `MS-Cliente`.
-3. **Emitir Cotización:** Crear cotización en el `MS-Cotizador` enviando solo el `clienteId`. El sistema resolverá automáticamente el nombre del cliente mediante **OpenFeign**.
-4. **Finalizar:** Gestionar stock, facturación y notificaciones para cerrar el ciclo de venta.
+## 🗺️ Mapa de Flujo del Ecosistema (ASCII Art)
+
+Así es como viajan los datos entre tus 10 microservicios. Fíjate cómo el MS-Cotizador coordina la magia usando Feign y cómo el MS-Stock se asegura de que no vendamos lo que no tenemos.
+
+```text
+[ Thunder Client ]
+       |
+       |  (1. POST /api/clientes)  --> [ MS-Cliente :8084 ] --> [ cliente_db ]
+       |
+       |  (2. POST /api/equipos)   --> [ MS-Equipo :8086 ]  --> [ equipo_db ]
+       |                                      ^
+       |                                      | (Feign)
+       |                                      v
+       |  (3. POST /api/cotizaciones) --> [ MS-Cotizador :8082 ] --> [ cotizador_db ]
+       |                                      |
+       |                                      | (Feign: "Dame nombre del Cliente ID 1")
+       |                                      v
+       |                               [ MS-Cliente :8084 ]
+       |
+       |  (4. POST /api/items) --> [ MS-ItemCotizador :8083 ] --> [ itemcotizador_db ]
+       |                                      |
+       |                                      | (Feign: "Registra ítem de cotización")
+       |                                      v
+       |                               [ MS-Cotizador :8082 ]
+       |
+       |  (5. PUT /api/stock/1) --> [ MS-Stock :8085 ] --> [ stock_db ]
+       |                                      ^
+       |                                      | (Feign)
+       |                                      v
+       |                               [ MS-ItemCotizador :8083 ]
+       |
+       |  (6. POST /api/facturas) --> [ MS-Facturacion :8087 ] --> [ facturacion_db ]
+       |
+       |  (7. POST /api/notificaciones) --> [ MS-Notificacion :8089 ] --> [ notificacion_db ]
+       |
+       |  (8. POST /api/usuarios/login) --> [ MS-Usuario :8090 ] --> [ usuario_db ]
+       v
+[ Fin del Ciclo ]
 
 ---
 

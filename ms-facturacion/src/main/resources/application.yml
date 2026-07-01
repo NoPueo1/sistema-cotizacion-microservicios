@@ -1,0 +1,20 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: ms-facturacion
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_facturacion?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+cliente:
+  service:
+    url: localhost:8080
